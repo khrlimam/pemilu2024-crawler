@@ -1,6 +1,5 @@
 package proj.internal
 
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.nio.file.FileAlreadyExistsException
 import java.nio.file.Files
@@ -9,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun main(vararg args: String) = runBlocking {
+fun main(vararg args: String) {
     Cli().main(args)
 }
 

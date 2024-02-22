@@ -10,7 +10,7 @@ class Crawler(val datasetPath: Path, dataSize: Long = ITERATIONS, worker: Int = 
 
     private val WILAYAH_PARTITION = intArrayOf(2, 4, 6, 10, 13)
     private fun kodeToPath(vararg kode: String): String = kode.joinToString("/")
-    private val pb = ProgressBar("$worker. Mengunduh Data TPS", dataSize)
+    private val pb = ProgressBar("$worker. Mengunduh Data TPS", 0)
 
     private fun partKodeTps(kodeTps: String): List<String> {
         return WILAYAH_PARTITION.map { kodeTps.substring(0, it) }
@@ -25,12 +25,15 @@ class Crawler(val datasetPath: Path, dataSize: Long = ITERATIONS, worker: Int = 
     suspend fun crawl(vararg kode: String = arrayOf("0")) {
         coroutineScope {
             val res = KpuService.req.wilayah(kodeToPath(*kode)).body()
-            res?.forEach {
-                if (it.tingkat == 5) {
-                    launch { getSuaraAndWriteToCsv(it.kode) }
-                } else launch {
-                    if (it.tingkat == 1) crawl(it.kode)
-                    else crawl(*kode, it.kode)
+            res?.let { wilayahs ->
+                launch { pb.maxHint(pb.max + wilayahs.size) }
+                wilayahs.forEach {
+                    if (it.tingkat == 5) {
+                        launch { getSuaraAndWriteToCsv(it.kode) }
+                    } else launch {
+                        if (it.tingkat == 1) crawl(it.kode)
+                        else crawl(*kode, it.kode)
+                    }
                 }
             }
         }
