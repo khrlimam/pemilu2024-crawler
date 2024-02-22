@@ -6,11 +6,13 @@ import me.tongfei.progressbar.ProgressBar
 import proj.internal.pojo.Hhcw
 import java.nio.file.Path
 
-class Crawler(val datasetPath: Path, dataSize: Long = ITERATIONS, worker: Int = 1) {
+typealias UpdateProgressHint = (Long) -> Unit
+
+class Crawler(val datasetPath: Path, dataSize: Long = 0L, worker: Int = 1) {
 
     private val WILAYAH_PARTITION = intArrayOf(2, 4, 6, 10, 13)
     private fun kodeToPath(vararg kode: String): String = kode.joinToString("/")
-    private val pb = ProgressBar("$worker. Mengunduh Data TPS", 0)
+    private val pb = ProgressBar("Mengunduh Data TPS", dataSize)
 
     private fun partKodeTps(kodeTps: String): List<String> {
         return WILAYAH_PARTITION.map { kodeTps.substring(0, it) }
@@ -22,13 +24,17 @@ class Crawler(val datasetPath: Path, dataSize: Long = ITERATIONS, worker: Int = 
         }
     }
 
+    private suspend fun updateMaxHint(newMax: Long) = coroutineScope {
+        launch { pb.maxHint(pb.max + newMax) }
+    }
+
     suspend fun crawl(vararg kode: String = arrayOf("0")) {
         coroutineScope {
             val res = KpuService.req.wilayah(kodeToPath(*kode)).body()
             res?.let { wilayahs ->
-                launch { pb.maxHint(pb.max + wilayahs.size) }
                 wilayahs.forEach {
                     if (it.tingkat == 5) {
+                        updateMaxHint(1L)
                         launch { getSuaraAndWriteToCsv(it.kode) }
                     } else launch {
                         if (it.tingkat == 1) crawl(it.kode)
