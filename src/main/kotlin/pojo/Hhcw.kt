@@ -30,6 +30,21 @@ data class Hhcw(
             images?.elementAtOrNull(0) ?: "-",
             images?.elementAtOrNull(1) ?: "-",
             images?.elementAtOrNull(2) ?: "-",
+            administrasi?.penggunaDptJ ?: 0,
+            administrasi?.penggunaDptbJ ?: 0,
+            administrasi?.penggunaNonDptJ ?: 0,
+            administrasi?.penggunaTotalJ ?: 0,
+            administrasi?.pemilihDptL ?: 0,
+            administrasi?.pemilihDptP ?: 0,
+            administrasi?.pemilihDptJ ?: 0,
+            administrasi?.penggunaDptL ?: 0,
+            administrasi?.penggunaDptP ?: 0,
+            administrasi?.penggunaDptbL ?: 0,
+            administrasi?.penggunaDptbP ?: 0,
+            administrasi?.penggunaNonDptL ?: 0,
+            administrasi?.penggunaNonDptP ?: 0,
+            administrasi?.penggunaTotalL ?: 0,
+            administrasi?.penggunaTotalP ?: 0
         ).joinToString(",").plus("\n")
 
     fun writeToCsv(datasetPath: Path, kode: String?) {

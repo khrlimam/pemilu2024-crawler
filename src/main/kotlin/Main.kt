@@ -23,6 +23,32 @@ fun initDataset(location: String, name: String) {
     } finally {
         File(
             Paths.get(location, name).toUri()
-        ).writeText("tps,paslon01,paslon02,paslon03,total_suara_paslon,suara_sah,suara_paslon-suara_sah,suara_tidak_sah,total_suara,img1,img2,img3\n")
+        ).writeText("tps," +
+                "paslon01," +
+                "paslon02," +
+                "paslon03," +
+                "total_suara_paslon," +
+                "suara_sah," +
+                "suara_lebih," +
+                "suara_tidak_sah," +
+                "total_suara," +
+                "img1," +
+                "img2," +
+                "img3," +
+                "pengguna_dpt," +
+                "pengguna_dptb," +
+                "pengguna_dpk," +
+                "jumlah_pengguna," +
+                "pemilih_dpt_lk," +
+                "pemilih_dpt_pr," +
+                "jumlah_pemilih_dpt," +
+                "pengguna_dpt_lk," +
+                "pengguna_dpt_pr," +
+                "pengguna_dptb_lk," +
+                "pengguna_dptb_pr," +
+                "pengguna_dpk_lk," +
+                "pengguna_dpk_pr," +
+                "jumlah_pengguna_lk," +
+                "jumlah_pengguna_pr\n")
     }
 }
