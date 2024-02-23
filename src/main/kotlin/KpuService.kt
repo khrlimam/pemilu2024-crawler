@@ -32,7 +32,7 @@ interface KpuService {
             Retrofit.Builder().baseUrl("https://sirekap-obj-data.kpu.go.id")
                 .client(
                     OkHttpClient.Builder()
-                        .readTimeout(1L, TimeUnit.MINUTES)
+                        .readTimeout(10L, TimeUnit.MINUTES)
                         .addInterceptor {
                             val req = it.request()
                                 .newBuilder()
