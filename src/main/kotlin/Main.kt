@@ -12,7 +12,7 @@ fun main(vararg args: String) {
     Cli().main(args)
 }
 
-fun now(): String = Date().let { SimpleDateFormat("yyyy-MM-dd HHmm").format(it) }
+fun now(): String = Date().let { SimpleDateFormat("yyyy-MM-dd HH-mm").format(it) }
 val currentDatasetName: String
     get() = "${now()}.csv"
 
