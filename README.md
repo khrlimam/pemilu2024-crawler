@@ -1,7 +1,9 @@
+
+
 This is the source code for TPS Crawler in kotlin. Built jar available [here](https://github.com/khrlimam/pemilu2024-crawler/releases/tag/v1.0)
 
 ## Usage
-
+Make sure it run on jdk 21
 ```bash
 java -cp pemilu2024.main.jar proj.internal.MainKt --<options>
 ```
